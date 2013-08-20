@@ -51,18 +51,15 @@ def hand_value hand
 
   end
 
+  # handle aces being 11 or 1
   hand.count{ | card | card[0..-2] == 'A' }.times do
-    puts "here"
-
+    #puts "here"
     break if result <= 21
-
-    puts "Aces, biatch"
-
+    #puts "Aces, biatch"
     result -= 10
   end
 
-
-  result;
+  result
 end
 
 # Welcome
@@ -95,7 +92,7 @@ begin
 
 end while choice == "h" && hand_value(player_hand) < 21
 
-puts "Player score: #{ hand_value(player_hand) }"
+puts "Player score: #{ hand_value(player_hand) }\n"
 abort( "Bust! You lose..." ) if hand_value( player_hand ) > 21
 
 # Deal to dealer
@@ -111,7 +108,7 @@ while hand_value( dealer_hand ) < 17
   deal_card( deck, dealer_hand, "Dealer")
 end
 
-puts "Dealer score: #{ hand_value(dealer_hand) }"
+puts "Dealer score: #{ hand_value(dealer_hand) }\n"
 
 puts "Dealer stands"
 

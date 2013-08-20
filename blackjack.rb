@@ -81,22 +81,23 @@ end
 # deal cards to the player
 begin
 
-  puts "Player score: #{ hand_value(player_hand) }"
+  puts "Player score: #{ hand_value(player_hand) }\n\n"
 
   # ask if wants to hit
   print "Hit or Stand (H/S): "
   choice = gets.chomp.downcase
+  puts "\n"
 
   # deal if yes
   deal_card( deck, player_hand, "Player" ) if choice == "h"
 
 end while choice == "h" && hand_value(player_hand) < 21
 
-puts "Player score: #{ hand_value(player_hand) }\n"
+puts "Player score: #{ hand_value(player_hand) }\n\n"
 abort( "Bust! You lose..." ) if hand_value( player_hand ) > 21
 
 # Deal to dealer
-# TODO: if player hand > 21, then bust instead of deal to dealer
+# Done: if player hand > 21, then bust instead of deal to dealer
 2.times do
   deal_card( deck, dealer_hand, "Dealer" )
 end
@@ -108,9 +109,9 @@ while hand_value( dealer_hand ) < 17
   deal_card( deck, dealer_hand, "Dealer")
 end
 
-puts "Dealer score: #{ hand_value(dealer_hand) }\n"
+puts "Dealer score: #{ hand_value(dealer_hand) }\n\n"
 
-puts "Dealer stands"
+puts "Dealer stands\n\n"
 
 
 # evaluate results

@@ -18,11 +18,10 @@ def build_deck
   deck.shuffle
 end
 
-# print_hand
-# prints the hand of the player
-def print_hand hand
-  p hand
-  p hand_value( hand )
+# print_value
+# prints the value of given hand and player name
+def print_value hand, who
+  puts "#{ who } score: #{ hand_value(hand) }\n\n"
 end
 
 # deal_card
@@ -38,7 +37,7 @@ end
 def hand_value hand
   result = 0
   hand.each do | card |
-    value_str = card[0..-2]
+    value_str = card.chop
 
     case value_str
     when "2".."10"
@@ -52,10 +51,8 @@ def hand_value hand
   end
 
   # handle aces being 11 or 1
-  hand.count{ | card | card[0..-2] == 'A' }.times do
-    #puts "here"
+  hand.count{ | card | card.chop == 'A' }.times do
     break if result <= 21
-    #puts "Aces, biatch"
     result -= 10
   end
 
@@ -81,7 +78,7 @@ end
 # deal cards to the player
 begin
 
-  puts "Player score: #{ hand_value(player_hand) }\n\n"
+  print_value( player_hand, "Player" )
 
   # ask if wants to hit
   print "Hit or Stand (H/S): "
@@ -93,11 +90,12 @@ begin
 
 end while choice == "h" && hand_value(player_hand) < 21
 
-puts "Player score: #{ hand_value(player_hand) }\n\n"
+print_value( player_hand, "Player" )
+
+# leave game if player bust
 abort( "Bust! You lose..." ) if hand_value( player_hand ) > 21
 
 # Deal to dealer
-# Done: if player hand > 21, then bust instead of deal to dealer
 2.times do
   deal_card( deck, dealer_hand, "Dealer" )
 end
@@ -109,12 +107,13 @@ while hand_value( dealer_hand ) < 17
   deal_card( deck, dealer_hand, "Dealer")
 end
 
-puts "Dealer score: #{ hand_value(dealer_hand) }\n\n"
+print_value( dealer_hand, "Dealer" )
 
 puts "Dealer stands\n\n"
 
 
 # evaluate results
+# note that player hand has been evalutated as non-bust already
 
 if hand_value( dealer_hand ) > 21
   puts "You win, the dealer went over"
